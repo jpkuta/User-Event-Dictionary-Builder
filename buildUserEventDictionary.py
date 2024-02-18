@@ -1,50 +1,29 @@
 import json
+from collections import defaultdict
 
 # Read input JSON file
 with open('input.json', 'r') as f:
     data = json.load(f)
 
-# Create dictionary to aggregate timestamp data
-aggregated_timestamp_data = {}
-# Create dictionary to aggregate command frequency data
-aggregated_freq_data = {}
-# Create dictionary to aggregate user activity data
-user_activity = {}
+# Create dictionaries to aggregate data
+aggregated_timestamp_data = defaultdict(lambda: defaultdict(list))
+aggregated_freq_data = defaultdict(lambda: defaultdict(int))
+user_activity = defaultdict(int)
 
-# Iterate over events and aggregate timestamp data for user events
+# Iterate over events and aggregate data
 for event in data:
     user = event['user']
     command = event['command']
     timestamp = event['timestamp']
     
-    if user not in aggregated_timestamp_data:
-        aggregated_timestamp_data[user] = {}
-    if command not in aggregated_timestamp_data[user]:
-        aggregated_timestamp_data[user][command] = []
-    
+    # Aggregate timestamp data
     aggregated_timestamp_data[user][command].append(timestamp)
-
-# Iterate over events and aggregate frequency data
-for event in data:
-    user = event['user']
-    command = event['command']
     
-    if user not in aggregated_freq_data:
-        aggregated_freq_data[user] = {}
+    # Aggregate frequency data
+    aggregated_freq_data[user][command] += 1
     
-    if command not in aggregated_freq_data[user]:
-        aggregated_freq_data[user][command] = 1
-    else:
-        aggregated_freq_data[user][command] += 1
-
-# Iterate over events and aggregate user activity data
-for event in data:
-    user = event['user']
-    
-    if user not in user_activity:
-        user_activity[user] = 1
-    else:
-        user_activity[user] += 1
+    # Aggregate user activity data
+    user_activity[user] += 1
 
 # Sort the users based on activity
 sorted_users = sorted(user_activity.items(), key=lambda x: x[1], reverse=True)
