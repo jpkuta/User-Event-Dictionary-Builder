@@ -20,6 +20,6 @@ for event in data:
     
     aggregated_data[user][command].append(timestamp)
 
-# Write aggregated data to output JSON file, save output to same directory as this script
+# Write aggregated data to output.json file
 with open('output.json', 'w') as f:
     json.dump(aggregated_data, f, indent=4)
