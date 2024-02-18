@@ -1,6 +1,8 @@
 # User-Event-Dictionary-Builder
 ## Description
-This python script aggrigates user command and timestamp data from a input.json file.
+This python script aggrigates user timestamp data from a input.json file.
+Additionally there is a method which outputs how many times each command was executed by a user. This aids in identifying the most frequent commands utilized by each user.
+
 
 ## How to use
                 
